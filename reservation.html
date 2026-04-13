@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation – Etherra</title>
+    <meta name="description" content="Réservez un intervenant Etherra pour votre événement professionnel. Conférence, atelier, table ronde – notre équipe vous répond sous 48h.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <a href="index.html" class="header-logo">
+            <img src="etherra-icon.png" alt="Etherra" class="header-icon">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="index.html#intervenants" class="hide-mobile">Intervenants</a></li>
+                <li class="nav-social">
+                    <a href="#" target="_blank" rel="noopener" title="LinkedIn Etherra">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </li>
+                <li class="nav-social">
+                    <a href="#" target="_blank" rel="noopener" title="Instagram Etherra">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ===== FORMULAIRE DE RÉSERVATION ===== -->
+    <section class="resa-section">
+        <div class="resa-inner">
+
+            <!-- En-tête -->
+            <div class="resa-header">
+                <a href="javascript:history.back()" class="back-link">
+                    <i class="fas fa-arrow-left" aria-hidden="true"></i> Retour
+                </a>
+                <h1>Faire une demande</h1>
+                <p>
+                    Remplissez le formulaire ci-dessous et notre équipe vous recontacte
+                    sous&nbsp;48h pour confirmer les disponibilités et finaliser les détails de votre événement.
+                </p>
+            </div>
+
+            <!-- Formulaire -->
+            <form class="resa-form" id="resa-form" novalidate onsubmit="soumettreFormulaire(event)">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nom">Nom / Organisation <span style="color: var(--vert-logo);">*</span></label>
+                        <input
+                            type="text"
+                            id="nom"
+                            name="nom"
+                            placeholder="Votre nom ou entreprise"
+                            required
+                            autocomplete="organization"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Adresse email <span style="color: var(--vert-logo);">*</span></label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="contact@votre-organisation.fr"
+                            required
+                            autocomplete="email"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="intervenant">Intervenant souhaité</label>
+                    <input
+                        type="text"
+                        id="intervenant"
+                        name="intervenant"
+                        placeholder="Nom de l'intervenant (si déjà identifié)"
+                    >
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="type">Type d'événement</label>
+                        <select id="type" name="type">
+                            <option value="" disabled selected>Sélectionner...</option>
+                            <option value="conference">Conférence</option>
+                            <option value="atelier">Atelier pratique</option>
+                            <option value="table-ronde">Table ronde</option>
+                            <option value="evenement">Événement spécial</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date ou période souhaitée</label>
+                        <input
+                            type="text"
+                            id="date"
+                            name="date"
+                            placeholder="ex : 15 mars 2026 · ou T2 2026"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description de votre événement <span style="color: var(--vert-logo);">*</span></label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        placeholder="Décrivez votre événement : thématique, audience, contexte, nombre de participants attendus..."
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Informations complémentaires</label>
+                    <textarea
+                        id="message"
+                        name="message"
+                        placeholder="Contraintes particulières, format souhaité, durée, lieu..."
+                        style="min-height: 100px;"
+                    ></textarea>
+                </div>
+
+                <!-- Erreur globale -->
+                <div id="form-error" style="
+                    display: none;
+                    background: rgba(220, 80, 80, 0.1);
+                    border: 1px solid rgba(220, 80, 80, 0.3);
+                    border-radius: 8px;
+                    padding: 14px 18px;
+                    color: #e07070;
+                    font-size: 14px;
+                    margin-bottom: 20px;
+                ">
+                    <i class="fas fa-exclamation-triangle" style="margin-right: 8px;"></i>
+                    Veuillez remplir tous les champs obligatoires.
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                    Envoyer la demande
+                </button>
+
+            </form>
+
+            <!-- Message de confirmation (affiché après envoi) -->
+            <div class="resa-confirmation" id="resa-confirmation" role="alert" aria-live="polite">
+                <div class="confirmation-icon">
+                    <i class="fas fa-check" aria-hidden="true"></i>
+                </div>
+                <h2>Demande envoyée !</h2>
+                <p>
+                    Merci pour votre confiance. Notre équipe a bien reçu votre demande
+                    et vous recontactera sous 48h ouvrées pour confirmer la disponibilité
+                    de l'intervenant et organiser votre événement.
+                </p>
+                <a href="index.html" class="btn-cta">
+                    <i class="fas fa-home" style="margin-right: 8px;"></i>Retour à l'accueil
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="footer-inner">
+            <div>
+                <div class="footer-brand"><img src="etherra-text.png" alt="Etherra" class="footer-logo-img"></div>
+                <div class="footer-tagline">Des idées qui inspirent, des événements qui engagent.</div>
+            </div>
+            <nav aria-label="Réseaux sociaux">
+                <div class="footer-social">
+                    <a href="#" target="_blank" rel="noopener" title="LinkedIn Etherra">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" target="_blank" rel="noopener" title="Instagram Etherra">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <p class="footer-copy">&copy; 2026 Etherra. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        /* Pré-remplit l'intervenant depuis l'URL si disponible */
+        (function () {
+            const params = new URLSearchParams(window.location.search);
+            const intervenant = params.get('intervenant');
+            if (intervenant) {
+                document.getElementById('intervenant').value = intervenant;
+            }
+        })();
+
+        /* Soumission du formulaire */
+        function soumettreFormulaire(e) {
+            e.preventDefault();
+
+            const nom  = document.getElementById('nom').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const desc = document.getElementById('description').value.trim();
+            const errDiv = document.getElementById('form-error');
+
+            if (!nom || !email || !desc) {
+                errDiv.style.display = 'block';
+                return;
+            }
+
+            errDiv.style.display = 'none';
+
+            // Animation de chargement sur le bouton
+            const btn = document.querySelector('.btn-submit');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp; Envoi en cours...';
+            btn.disabled = true;
+
+            // Simulation d'envoi (à remplacer par un appel API réel)
+            setTimeout(() => {
+                document.getElementById('resa-form').style.display = 'none';
+                document.getElementById('resa-confirmation').style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 1200);
+        }
+
+        /* Masque l'erreur dès que l'utilisateur retape */
+        ['nom', 'email', 'description'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                document.getElementById('form-error').style.display = 'none';
+            });
+        });
+    </script>
+
+</body>
+</html>
