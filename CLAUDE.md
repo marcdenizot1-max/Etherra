@@ -73,6 +73,8 @@ La classe `.reveal` est ajoutée aux éléments au montage, `.visible` est ajout
 - Overlay `#mobile-overlay` : fond sombre cliquable pour fermer
 - Le scroll du body est bloqué pendant l'ouverture (`overflow: hidden`)
 - Fermeture : clic overlay, clic lien, reclic hamburger
+- **Tous les liens de nav ont `.hide-mobile`** (y compris "Accueil") — en mobile seul le hamburger est visible dans le header
+- L'overlay a `pointer-events: none` par défaut et `pointer-events: auto` uniquement avec `.visible` — sinon il bloque les clics sur le menu
 
 ## Responsive
 - Breakpoint tablette : `900px` (barre de recherche en colonne, steps en colonne)
