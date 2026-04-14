@@ -16,6 +16,55 @@
     --font:          'Inter', sans-serif;
 }
 
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-24px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Hero — animations au chargement */
+.hero-text {
+    animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-tagline {
+    animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+.hero p.description {
+    animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both;
+}
+.search-container {
+    animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.42s both;
+}
+
+/* Header — glisse depuis le haut */
+header {
+    animation: slideInLeft 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Scroll reveal — état initial */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* --- BASE --- */
 *, *::before, *::after {
     margin: 0;
@@ -136,39 +185,18 @@ nav a:hover { color: var(--vert-logo); }
     border-bottom: 1px solid var(--bordure);
     position: relative;
     overflow: hidden;
-    /* Base sombre — gradient irrégulier pour éviter l'uniformité */
-    background-color: #1a1d21;
-    background-image:
-        radial-gradient(ellipse 60% 50% at 20% 25%, rgba(60, 70, 80, 0.22) 0%, transparent 55%),
-        radial-gradient(ellipse 70% 60% at 80% 80%, rgba(0, 0, 0, 0.55) 0%, transparent 55%),
-        radial-gradient(ellipse 50% 40% at 65% 20%, rgba(0, 0, 0, 0.35) 0%, transparent 50%),
-        radial-gradient(ellipse 45% 55% at 30% 85%, rgba(0, 0, 0, 0.4) 0%, transparent 55%),
-        linear-gradient(145deg, #23272c 0%, #15181c 50%, #1d2126 100%);
+    background-image: url("fond.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-/* Couche de bruit SVG réaliste (grain ardoise) */
 .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 420px 420px;
-    mix-blend-mode: overlay;
-    opacity: 0.9;
-    z-index: 0;
+    display: none;
 }
 
-/* Couche de veines organiques (fissures ardoise) */
 .hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cfilter id='v'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.012 0.025' numOctaves='2' seed='3'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='25'/%3E%3C/filter%3E%3Cg filter='url(%23v)' stroke='rgba(0,0,0,0.35)' fill='none'%3E%3Cpath d='M0,200 Q400,180 800,220'/%3E%3Cpath d='M0,450 Q400,430 800,480'/%3E%3Cpath d='M0,650 Q400,630 800,660'/%3E%3Cpath d='M200,0 Q220,400 180,800'/%3E%3Cpath d='M550,0 Q530,400 570,800'/%3E%3C/g%3E%3C/svg%3E");
-    background-size: 800px 800px;
-    opacity: 0.5;
-    z-index: 0;
+    display: none;
 }
 
 .hero > * {
@@ -374,7 +402,11 @@ nav a:hover { color: var(--vert-logo); }
    ============================================ */
 .intervenants-section {
     padding: 110px 5%;
-    background-color: var(--ardoise-fond);
+    background-image: url("fond.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .grid {
@@ -1112,8 +1144,119 @@ footer {
     nav a  { font-size: 11px; }
 }
 
+/* ============================================
+   HAMBURGER & MENU MOBILE
+   ============================================ */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 200;
+}
+
+.hamburger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--texte-gris);
+    border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity   0.3s ease,
+                background-color 0.25s ease;
+    transform-origin: center;
+}
+
+.hamburger:hover span { background-color: var(--vert-logo); }
+
+/* État ouvert — croix */
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Overlay sombre */
+.mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 149;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.mobile-overlay.visible { opacity: 1; }
+
+/* Menu drawer */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 72vw;
+    max-width: 300px;
+    height: 100dvh;
+    background: #1a1e23;
+    border-left: 1px solid var(--bordure);
+    z-index: 150;
+    padding: 90px 36px 40px;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    backdrop-filter: blur(12px);
+}
+
+.mobile-menu.open { transform: translateX(0); }
+
+.mobile-menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.mobile-menu li a {
+    display: block;
+    padding: 13px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--texte-gris);
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--bordure);
+    transition: color 0.2s, padding-left 0.2s;
+}
+
+.mobile-menu li a:hover {
+    color: var(--vert-logo);
+    padding-left: 6px;
+}
+
+.mobile-menu-social {
+    margin-top: auto;
+    padding-top: 32px;
+    display: flex;
+    gap: 20px;
+}
+
+.mobile-menu-social a {
+    font-size: 20px;
+    color: var(--texte-gris);
+    transition: color 0.25s;
+    border-bottom: none !important;
+    padding: 0 !important;
+}
+
+.mobile-menu-social a:hover { color: var(--vert-logo); }
+
 @media (max-width: 600px) {
     .hide-mobile { display: none; }
+    .hamburger { display: flex; }
+    .mobile-overlay { display: block; }
     .section-title { font-size: 24px; }
     .resa-header h1 { font-size: 26px; }
     .hero p.description { font-size: 15px; }

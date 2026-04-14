@@ -23,19 +23,39 @@
                 <li><a href="#intervenants" class="hide-mobile">Intervenants</a></li>
                 <li><a href="#comment-ca-marche" class="hide-mobile">Comment ça marche</a></li>
                 <li><a href="reservation.html" class="hide-mobile">Contact</a></li>
-                <li class="nav-social">
+                <li class="nav-social hide-mobile">
                     <a href="#" target="_blank" rel="noopener" title="LinkedIn Etherra">
                         <i class="fab fa-linkedin"></i>
                     </a>
                 </li>
-                <li class="nav-social">
+                <li class="nav-social hide-mobile">
                     <a href="#" target="_blank" rel="noopener" title="Instagram Etherra">
                         <i class="fab fa-instagram"></i>
                     </a>
                 </li>
             </ul>
         </nav>
+        <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </header>
+
+    <!-- ===== MENU MOBILE ===== -->
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="#intervenants">Intervenants</a></li>
+            <li><a href="#comment-ca-marche">Comment ça marche</a></li>
+            <li><a href="reservation.html">Contact</a></li>
+            <li class="mobile-menu-social">
+                <a href="#" target="_blank" rel="noopener" title="LinkedIn Etherra"><i class="fab fa-linkedin"></i></a>
+                <a href="#" target="_blank" rel="noopener" title="Instagram Etherra"><i class="fab fa-instagram"></i></a>
+            </li>
+        </ul>
+    </div>
+    <div class="mobile-overlay" id="mobile-overlay"></div>
 
     <!-- ===== HERO ===== -->
     <section class="hero">
@@ -273,6 +293,7 @@
             });
 
             renderCards(filtered);
+            requestAnimationFrame(revealCards);
             document.getElementById('intervenants').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
@@ -284,10 +305,88 @@
         });
 
         /* ================================================
+           SCROLL REVEAL (IntersectionObserver)
+           ================================================ */
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    scrollObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        function revealCards() {
+            document.querySelectorAll('.card:not(.visible)').forEach((el, i) => {
+                el.classList.add('reveal');
+                el.style.transitionDelay = `${i * 0.07}s`;
+                scrollObserver.observe(el);
+            });
+        }
+
+        function initReveal() {
+            // Section headers
+            document.querySelectorAll('.section-header').forEach(el => {
+                el.classList.add('reveal');
+                scrollObserver.observe(el);
+            });
+            // Étapes "Comment ça marche" en cascade
+            document.querySelectorAll('.step').forEach((el, i) => {
+                el.classList.add('reveal');
+                el.style.transitionDelay = `${i * 0.12}s`;
+                scrollObserver.observe(el);
+            });
+            // CTA section
+            document.querySelectorAll('.cta-section h2, .cta-section p, .cta-section .btn-cta').forEach((el, i) => {
+                el.classList.add('reveal');
+                el.style.transitionDelay = `${i * 0.1}s`;
+                scrollObserver.observe(el);
+            });
+        }
+
+        /* ================================================
            INITIALISATION : tri alphabétique
            ================================================ */
         intervenants.sort((a, b) => a.nom.localeCompare(b.nom, 'fr'));
         renderCards(intervenants);
+        initReveal();
+        requestAnimationFrame(revealCards);
+
+        /* ================================================
+           MENU HAMBURGER MOBILE
+           ================================================ */
+        const hamburger   = document.getElementById('hamburger');
+        const mobileMenu  = document.getElementById('mobile-menu');
+        const overlay     = document.getElementById('mobile-overlay');
+
+        function openMenu() {
+            hamburger.classList.add('open');
+            mobileMenu.classList.add('open');
+            overlay.classList.add('visible');
+            hamburger.setAttribute('aria-expanded', 'true');
+            mobileMenu.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            hamburger.classList.remove('open');
+            mobileMenu.classList.remove('open');
+            overlay.classList.remove('visible');
+            hamburger.setAttribute('aria-expanded', 'false');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.contains('open') ? closeMenu() : openMenu();
+        });
+
+        overlay.addEventListener('click', closeMenu);
+
+        // Ferme le menu après un clic sur un lien
+        mobileMenu.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', closeMenu);
+        });
     </script>
 
 </body>
