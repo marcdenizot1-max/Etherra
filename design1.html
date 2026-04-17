@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etherra - Trouvez l'intervenant idéal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- VARIABLES DE COULEURS --- */
+        :root {
+            --blanc: #ffffff;
+            --vert-clair: #a8e6cf; /* Vert doux et moderne */
+            --gris-ardoise: #2f3640;
+            --gris-clair: #f4f6f8;
+            --texte-secondaire: #636e72;
+        }
+
+        /* --- BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--blanc);
+            color: var(--gris-ardoise);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- HEADER (Navigation) --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: var(--blanc);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gris-ardoise);
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #72d5b0; /* Nuance un peu plus forte du vert pour le logo */
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #72d5b0;
+        }
+
+        .social-icons a {
+            margin-left: 15px;
+            font-size: 20px;
+            color: var(--gris-ardoise);
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #72d5b0;
+        }
+
+        /* --- HERO SECTION & RECHERCHE --- */
+        .hero {
+            background-color: var(--gris-clair);
+            padding: 80px 5%;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            color: var(--gris-ardoise);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--texte-secondaire);
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+        }
+
+        /* Barre de recherche */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--blanc);
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            padding: 10px;
+        }
+
+        .search-box {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            padding: 0 20px;
+            border-right: 1px solid #eee;
+        }
+
+        .search-box:last-child {
+            border-right: none;
+        }
+
+        .search-box i {
+            color: var(--texte-secondaire);
+            margin-right: 10px;
+        }
+
+        .search-box input, .search-box select {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 16px;
+            color: var(--gris-ardoise);
+            background: transparent;
+        }
+
+        .btn-search {
+            background-color: var(--vert-clair);
+            color: var(--gris-ardoise);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-search:hover {
+            background-color: #8ce1c0;
+            transform: translateY(-2px);
+        }
+
+        /* --- SECTION INTERVENANTS (Grille) --- */
+        .intervenants-section {
+            padding: 80px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 50px;
+            color: var(--gris-ardoise);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Carte Profil */
+        .card {
+            background: var(--blanc);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 25px;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .card-name {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tag {
+            background-color: var(--gris-clair);
+            color: var(--texte-secondaire);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Bouton réserver (sur la carte) */
+        .btn-reserver {
+            display: block;
+            background-color: transparent;
+            color: var(--gris-ardoise);
+            border: 2px solid var(--vert-clair);
+            text-align: center;
+            padding: 12px;
+            margin: 20px 25px 25px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .card:hover .btn-reserver {
+            background-color: var(--vert-clair);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--gris-ardoise);
+            color: var(--blanc);
+            padding: 40px 5%;
+            text-align: center;
+        }
+
+        footer p {
+            color: #a4b0be;
+            font-size: 14px;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 900px) {
+            .search-container {
+                flex-direction: column;
+                border-radius: 15px;
+                padding: 20px;
+            }
+            .search-box {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+                padding: 15px 0;
+            }
+            .search-box:last-of-type {
+                border-bottom: none;
+                margin-bottom: 15px;
+            }
+            .btn-search {
+                width: 100%;
+                border-radius: 8px;
+            }
+            nav ul {
+                display: none; /* Menu burger à implémenter pour mobile plus tard */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Ether<span>ra</span></div>
+        <nav>
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#intervenants">Intervenants</a></li>
+                <li><a href="#">Thématiques</a></li>
+                <li><a href="#">À propos</a></li>
+            </ul>
+        </nav>
+        <div class="social-icons">
+            <a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>L'inspiration pour tous vos événements</h1>
+        <p>Etherra vous connecte avec les meilleurs conférenciers, animateurs d'ateliers et experts pour vos tables rondes. Découvrez des profils uniques pour inspirer, former et engager votre audience.</p>
+        
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Thématique, nom de l'expert...">
+            </div>
+            <div class="search-box">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" placeholder="Ville ou région...">
+            </div>
+            <div class="search-box">
+                <i class="fas fa-filter"></i>
+                <select>
+                    <option value="">Type d'intervention</option>
+                    <option value="conference">Conférence</option>
+                    <option value="atelier">Atelier</option>
+                    <option value="table-ronde">Table ronde</option>
+                    <option value="evenement">Événement spécial</option>
+                </select>
+            </div>
+            <button class="btn-search">Rechercher</button>
+        </div>
+    </section>
+
+    <section id="intervenants" class="intervenants-section">
+        <h2 class="section-title">Nos Intervenants à la une</h2>
+        
+        <div class="grid">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Marc Dubois" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-name">Marc Dubois</h3>
+                    <div class="tags">
+                        <span class="tag">Leadership</span>
+                        <span class="tag">Management</span>
+                        <span class="tag">Innovation</span>
+                    </div>
+                </div>
+                <a href="#" class="btn-reserver">Voir le profil & Réserver</a>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Sophie Laurent" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-name">Sophie Laurent</h3>
+                    <div class="tags">
+                        <span class="tag">Développement Durable</span>
+                        <span class="tag">RSE</span>
+                        <span class="tag">Atelier Collaboratif</span>
+                    </div>
+                </div>
+                <a href="#" class="btn-reserver">Voir le profil & Réserver</a>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Thomas Martin" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-name">Thomas Martin</h3>
+                    <div class="tags">
+                        <span class="tag">Intelligence Artificielle</span>
+                        <span class="tag">Tech</span>
+                        <span class="tag">Futur du travail</span>
+                    </div>
+                </div>
+                <a href="#" class="btn-reserver">Voir le profil & Réserver</a>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Léa Duteil" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-name">Léa Duteil</h3>
+                    <div class="tags">
+                        <span class="tag">Bien-être au travail</span>
+                        <span class="tag">Santé Mentale</span>
+                        <span class="tag">Table Ronde</span>
+                    </div>
+                </div>
+                <a href="#" class="btn-reserver">Voir le profil & Réserver</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="logo" style="color: white; margin-bottom: 20px;">Ether<span style="color: var(--vert-clair);">ra</span></div>
+        <p>&copy; 2026 Etherra. Tous droits réservés. Plateforme de réservation d'intervenants.</p>
+    </footer>
+
+</body>
+</html>

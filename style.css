@@ -144,7 +144,8 @@ header {
     color: #f0ede6;
     text-shadow: 0 0 12px rgba(142, 180, 134, 0.4);
     line-height: 1;
-    margin-top: 6px;
+    margin-top: 0;
+    transform: translateY(4px);
 }
 
 nav ul {

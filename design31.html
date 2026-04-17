@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etherra - Réservation d'intervenants</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- PALETTE DE COULEURS DARK MODE (Inspirée du logo) --- */
+        :root {
+            /* Ardoise très sombre, texture implicite par le contraste */
+            --ardoise-fond: #121519; 
+            /* Ardoise légèrement plus claire pour les cartes/éléments */
+            --ardoise-carte: #1d2229; 
+            /* Vert caractéristique tiré des feuilles du logo */
+            --vert-logo: #8eb486; 
+            --vert-hover: #72966a;
+            --texte-blanc: #f4f6f8;
+            --texte-gris: #a4b0be;
+            --accent-or: #d4af37; /* Rappel du soleil (optionnel) */
+        }
+
+        /* --- RÉINITIALISATION DE BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            /* Application de la couleur d'arrière-plan principale */
+            background-color: var(--ardoise-fond);
+            color: var(--texte-blanc);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            display: flex;
+            justify-content: flex-end; /* Menu aligné à droite */
+            padding: 25px 5%;
+            background-color: transparent;
+            position: absolute; /* Superpose le menu sur la section hero */
+            width: 100%;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+            align-items: center;
+        }
+
+        nav a {
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+            color: var(--texte-blanc);
+        }
+
+        nav a:hover {
+            color: var(--vert-logo);
+        }
+
+        .nav-social i {
+            font-size: 18px;
+            color: var(--texte-gris);
+            transition: color 0.3s;
+        }
+        
+        .nav-social i:hover {
+            color: var(--vert-logo);
+        }
+
+        /* --- HERO SECTION (Ardoise Sombre) --- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* L'image est l'élément central, on lui donne de l'espace */
+            padding: 120px 5% 80px 5%;
+            text-align: center;
+            /* Ligne de séparation subtile en bas */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            /* Ajout d'un dégradé radial très subtil pour donner de la profondeur à l'ardoise */
+            background: radial-gradient(circle at center, #1a1e24 0%, var(--ardoise-fond) 100%);
+        }
+
+        /* Intégration de votre image Logo */
+        .logo-image {
+            max-width: 100%;
+            width: 750px; /* Taille optimale pour l'impact visuel */
+            height: auto;
+            margin-bottom: 50px;
+            /* Ombre douce pour séparer l'image du fond si nécessaire */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
+            border-radius: 8px; /* Léger arrondi des angles de l'image */
+        }
+
+        .hero p.description {
+            font-size: 18px;
+            color: var(--texte-gris);
+            max-width: 850px;
+            margin-bottom: 50px;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        /* --- BARRE DE RECHERCHE (Adaptée au thème sombre) --- */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            max-width: 950px;
+            /* Fond de la barre de recherche */
+            background: var(--ardoise-carte);
+            border-radius: 8px;
+            /* Ombre portée pour détacher la barre du fond hero */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            padding: 10px;
+            /* Bordure très fine pour délimiter */
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .search-box {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            padding: 0 25px;
+            /* Séparateur entre les champs */
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .search-box:last-child {
+            border-right: none;
+        }
+
+        .search-box i {
+            color: var(--vert-logo);
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        .search-box input, .search-box select {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 16px;
+            color: var(--texte-blanc);
+            /* Important : fond transparent pour utiliser celui du conteneur */
+            background: transparent;
+        }
+
+        .search-box input::placeholder {
+            color: var(--texte-gris);
+            opacity: 0.7;
+        }
+
+        /* Personnalisation du menu déroulant (select) pour le dark mode */
+        .search-box select option {
+            background-color: var(--ardoise-carte);
+            color: var(--texte-blanc);
+        }
+
+        .btn-search {
+            background-color: var(--vert-logo);
+            color: var(--ardoise-fond); /* Texte foncé sur fond clair */
+            border: none;
+            padding: 16px 45px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-search:hover {
+            background-color: var(--vert-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(142, 180, 134, 0.3);
+        }
+
+        /* --- SECTION INTERVENANTS --- */
+        .intervenants-section {
+            padding: 100px 5%;
+            background-color: var(--ardoise-fond);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 60px;
+            color: var(--texte-blanc);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Carte Profil Dark Mode */
+        .card {
+            background: var(--ardoise-carte);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            /* Bordure subtile au repos */
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            /* La bordure s'illumine en vert au survol */
+            border-color: rgba(142, 180, 134, 0.4); 
+        }
+
+        .card-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            /* Effet esthétique : légèrement désaturé au repos */
+            filter: grayscale(30%) contrast(1.1); 
+            transition: filter 0.4s ease;
+        }
+
+        /* L'image reprend ses couleurs pleines au survol */
+        .card:hover .card-img {
+            filter: grayscale(0%) contrast(1);
+        }
+
+        .card-content {
+            padding: 30px 25px;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .card-name {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--texte-blanc);
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tag {
+            /* Fond vert très transparent pour les tags */
+            background-color: rgba(142, 180, 134, 0.1);
+            color: var(--vert-logo);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(142, 180, 134, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-reserver {
+            display: block;
+            background-color: transparent;
+            color: var(--vert-logo);
+            border: 1px solid var(--vert-logo);
+            text-align: center;
+            padding: 15px;
+            margin: 0 25px 30px 25px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .btn-reserver {
+            background-color: var(--vert-logo);
+            color: var(--ardoise-fond);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--ardoise-carte);
+            color: var(--texte-gris);
+            padding: 50px 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .footer-logo {
+            font-family: 'Playball', cursive; /* Si vous voulez utiliser une police script pour le footer */
+            font-size: 24px;
+            color: var(--texte-blanc);
+            margin-bottom: 15px;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 900px) {
+            .search-container {
+                flex-direction: column;
+                background: transparent;
+                box-shadow: none;
+                padding: 0;
+                border: none;
+                gap: 15px;
+            }
+            .search-box {
+                background: var(--ardoise-carte);
+                border: 1px solid rgba(255,255,255,0.1);
+                border-radius: 8px;
+                padding: 18px 25px;
+            }
+            .btn-search {
+                width: 100%;
+                padding: 20px;
+                border-radius: 8px;
+            }
+            .logo-image {
+                width: 100%; /* S'adapte à la largeur sur mobile */
+                box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            }
+            header {
+                justify-content: center; /* Centre le menu sur mobile */
+                padding: 20px;
+            }
+            nav ul {
+                gap: 20px;
+            }
+            nav a {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#intervenants">Intervenants</a></li>
+                <li><a href="#">Thématiques</a></li>
+                <li><a href="#">Contact</a></li>
+                <li class="nav-social"><a href="#" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a></li>
+                <li class="nav-social"><a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        
+        <img src="IMG_3507.JPG" alt="Etherra - Des idées qui inspirent" class="logo-image">
+        
+        <p class="description">Découvrez la plateforme sélective permettant de rechercher, découvrir et réserver des conférenciers, animateurs d’ateliers et experts pour des tables rondes autour de toutes vos thématiques.</p>
+        
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Thématique, nom de l'expert...">
+            </div>
+            <div class="search-box">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" placeholder="Ville ou région...">
+            </div>
+            <div class="search-box">
+                <i class="fas fa-filter"></i>
+                <select>
+                    <option value="" disabled selected>Format d'intervention</option>
+                    <option value="conference">Conférence</option>
+                    <option value="atelier">Atelier pratique</option>
+                    <option value="table-ronde">Table ronde</option>
+                    <option value="evenement">Événement spécial</option>
+                </select>
+            </div>
+            <button class="btn-search">Rechercher</button>
+        </div>
+    </section>
+
+    <section id="intervenants" class="intervenants-section">
+        <h2 class="section-title">Sélection d'experts</h2>
+        
+        <div class="grid">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Marc Dubois" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-name">Marc Dubois</h3>
+                    <div class="tags">
+                        <span class="tag">Leadership</span>
+                        <span class="tag">Management</span>
+                    </div>
+                </div>
+                <a href="#" class="btn-reserver">Consulter le profil</a>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Sophie Laurent" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-name">Sophie Laurent</h3>
+                    <div class="tags">
+                        <span class="tag">RSE & Climat</span>
+                        <span class="tag">Atelier</span>
+                    </div>
+                </div>
+                <a href="#" class="btn-reserver">Consulter le profil</a>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Thomas Martin" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-name">Thomas Martin</h3>
+                    <div class="tags">
+                        <span class="tag">Intelligence Artificielle</span>
+                        <span class="tag">Table Ronde</span>
+                    </div>
+                </div>
+                <a href="#" class="btn-reserver">Consulter le profil</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">Etherra</div>
+        <p>&copy; 2026 Etherra. Plateforme de réservation d'intervenants.</p>
+    </footer>
+
+</body>
+</html>

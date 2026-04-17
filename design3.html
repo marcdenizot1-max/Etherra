@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etherra - Réservation d'intervenants</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- PALETTE DE COULEURS (Basée sur votre image) --- */
+        :root {
+            --ardoise-fond: #111316; /* Gris très sombre presque noir, comme votre fond */
+            --ardoise-carte: #1c2025; /* Un peu plus clair pour les éléments en relief */
+            --vert-logo: #8eb486; /* Le vert des feuilles du logo */
+            --vert-hover: #72966a;
+            --texte-blanc: #f4f6f8;
+            --texte-gris: #a4b0be;
+            --or-soleil: #d4af37;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--ardoise-fond);
+            color: var(--texte-blanc);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 5%;
+            background-color: transparent;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--vert-logo);
+        }
+
+        /* --- HERO SECTION (Avec votre image) --- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 100px 5% 60px 5%;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Intégration de l'image du logo */
+        .logo-image {
+            max-width: 100%;
+            width: 700px; /* Taille ajustable */
+            height: auto;
+            margin-bottom: 40px;
+            /* Une légère ombre pour fondre l'image dans le fond noir */
+            box-shadow: 0 0 50px rgba(0,0,0,0.8); 
+            border-radius: 5px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--texte-gris);
+            max-width: 800px;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        /* --- BARRE DE RECHERCHE --- */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            max-width: 900px;
+            background: var(--ardoise-carte);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .search-box {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            padding: 0 20px;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .search-box:last-child {
+            border-right: none;
+        }
+
+        .search-box i {
+            color: var(--vert-logo);
+            margin-right: 12px;
+        }
+
+        .search-box input, .search-box select {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 15px;
+            color: var(--texte-blanc);
+            background: transparent;
+        }
+
+        .search-box input::placeholder {
+            color: var(--texte-gris);
+        }
+
+        /* Personnalisation du menu déroulant (select) pour le dark mode */
+        .search-box select option {
+            background-color: var(--ardoise-carte);
+            color: var(--texte-blanc);
+        }
+
+        .btn-search {
+            background-color: var(--vert-logo);
+            color: #000;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-search:hover {
+            background-color: var(--vert-hover);
+            transform: translateY(-2px);
+        }
+
+        /* --- SECTION INTERVENANTS --- */
+        .intervenants-section {
+            padding: 80px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 50px;
+            color: var(--texte-blanc);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Carte Profil Dark Mode */
+        .card {
+            background: var(--ardoise-carte);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            border-color: var(--vert-logo);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            filter: grayscale(20%); /* Effet élégant qui s'estompe au survol */
+            transition: filter 0.3s;
+        }
+
+        .card:hover .card-img {
+            filter: grayscale(0%);
+        }
+
+        .card-content {
+            padding: 25px;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .card-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--texte-blanc);
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tag {
+            background-color: rgba(142, 180, 134, 0.1);
+            color: var(--vert-logo);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid rgba(142, 180, 134, 0.2);
+        }
+
+        .btn-reserver {
+            display: block;
+            background-color: transparent;
+            color: var(--vert-logo);
+            border: 1px solid var(--vert-logo);
+            text-align: center;
+            padding: 12px;
+            margin: 0 25px 25px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .card:hover .btn-reserver {
+            background-color: var(--vert-logo);
+            color: #000;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--ardoise-carte);
+            color: var(--texte-gris);
+            padding: 40px 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .search-container {
+                flex-direction: column;
+                background: transparent;
+                box-shadow: none;
+                padding: 0;
+                border: none;
+                gap: 10px;
+            }
+            .search-box {
+                background: var(--ardoise-carte);
+                border: 1px solid rgba(255,255,255,0.05);
+                border-radius: 5px;
+                padding: 15px 20px;
+            }
+            .btn-search {
+                width: 100%;
+                padding: 18px;
+            }
+            .logo-image {
+                width: 100%; /* S'adapte aux petits écrans */
+            }
+            nav {
+                display: none; /* Cache le menu sur mobile pour le moment */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#intervenants">Intervenants</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#"><i class="fab fa-linkedin" style="font-size: 18px;"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        
+        <img src="IMG_3507.JPG" alt="Etherra Logo" class="logo-image">
+        
+        <p>Découvrez la plateforme permettant de rechercher et réserver des conférenciers, animateurs d’ateliers et experts pour des tables rondes autour de toutes vos thématiques.</p>
+        
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Thématique, nom...">
+            </div>
+            <div class="search-box">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" placeholder="Ville ou région...">
+            </div>
+            <div class="search-box">
+                <i class="fas fa-filter"></i>
+                <select>
+                    <option value="" disabled selected>Type d'événement</option>
+                    <option value="conference">Conférence</option>
+                    <option value="atelier">Atelier</option>
+                    <option value="table-ronde">Table ronde</option>
+                </select>
+            </div>
+            <button class="btn-search">Rechercher</button>
+        </div>
+    </section>
+
+    <section id="intervenants" class="intervenants-section">
+        <h2 class="section-title">Sélection d'experts</h2>
+        
+        <div class="grid">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Intervenant" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-name">Marc Dubois</h3>
+                    <div class="tags">
+                        <span class="tag">Leadership</span>
+                        <span class="tag">Management</span>
+                    </div>
+                </div>
+                <a href="#" class="btn-reserver">Voir le profil</a>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Intervenante" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-name">Sophie Laurent</h3>
+                    <div class="tags">
+                        <span class="tag">RSE</span>
+                        <span class="tag">Atelier</span>
+                    </div>
+                </div>
+                <a href="#" class="btn-reserver">Voir le profil</a>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Intervenant" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-name">Thomas Martin</h3>
+                    <div class="tags">
+                        <span class="tag">Tech & IA</span>
+                        <span class="tag">Table Ronde</span>
+                    </div>
+                </div>
+                <a href="#" class="btn-reserver">Voir le profil</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Etherra. Des idées qui inspirent, des évènements qui engagent.</p>
+    </footer>
+
+</body>
+</html>
