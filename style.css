@@ -366,7 +366,7 @@ nav a:hover { color: var(--vert-logo); }
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: rgba(142, 180, 134, 0.08);
+    background: #1d2229;
     border: 1px solid rgba(142, 180, 134, 0.28);
     display: flex;
     align-items: center;
@@ -375,11 +375,13 @@ nav a:hover { color: var(--vert-logo); }
     font-size: 26px;
     font-weight: 700;
     color: var(--vert-logo);
+    position: relative;
+    z-index: 1;
     transition: background 0.3s, border-color 0.3s;
 }
 
 .step:hover .step-number {
-    background: rgba(142, 180, 134, 0.14);
+    background: #232931;
     border-color: rgba(142, 180, 134, 0.5);
 }
 
