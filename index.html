@@ -179,7 +179,7 @@
 
             grid.innerHTML = data.map(p => `
                 <article class="card" onclick="window.location.href='profil.html?id=${p.id}'" role="button" tabindex="0" aria-label="Voir le profil de ${p.nom}">
-                    <img src="${p.photo}" alt="Photo de ${p.nom}" class="card-img" loading="lazy" style="object-fit:${p.photoFit||'cover'};object-position:${p.photoPosition||'center center'};${p.photoScale?'transform:'+p.photoScale+';transform-origin:center top':''}">
+                    <img src="${p.photo}" alt="Photo de ${p.nom}" class="card-img" loading="lazy" style="object-fit:${p.photoFit||'cover'};object-position:${p.photoPosition||'center center'}">
                     <div class="card-content">
                         <h3 class="card-name">${p.nom}</h3>
                         <div class="tags" aria-label="Thématiques">

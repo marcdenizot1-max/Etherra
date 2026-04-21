@@ -28,9 +28,8 @@ const intervenants = [
     {
         id: 11,
         nom: "Dominique Bidou",
-        photo: "dominiquebidou.jpg",
-        photoPosition: "center 5%",
-        photoScale: "scale(0.82)",
+        photo: "dominiquebidou_crop.jpg",
+        photoPosition: "center 20%",
         tags: ["Climat", "Développement durable", "Énergie"],
         type: "conference",
         ville: "Paris",
