@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baptiste Renard – Innovation & IA | Etherra</title>
-    <meta name="description" content="Profil de Baptiste Renard – Conférencier expert en Innovation et Intelligence Artificielle. Disponible pour conférences, ateliers et tables rondes.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Intervenant | Etherra</title>
+    <meta name="description" content="Profil intervenant – Etherra">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,26 +14,44 @@
     <!-- ===== HEADER ===== -->
     <header>
         <a href="index.html" class="header-logo">
-            <img src="etherra-icon.png" alt="Etherra" class="header-icon">
+            <img src="etherra-icon.png" alt="" class="header-icon" aria-hidden="true">
+            <span class="header-logo-text">Etherra</span>
         </a>
         <nav>
             <ul>
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="index.html#intervenants" class="hide-mobile">Intervenants</a></li>
                 <li><a href="reservation.html" class="hide-mobile">Contact</a></li>
-                <li class="nav-social">
+                <li class="nav-social hide-mobile">
                     <a href="#" target="_blank" rel="noopener" title="LinkedIn Etherra">
                         <i class="fab fa-linkedin"></i>
                     </a>
                 </li>
-                <li class="nav-social">
+                <li class="nav-social hide-mobile">
                     <a href="#" target="_blank" rel="noopener" title="Instagram Etherra">
                         <i class="fab fa-instagram"></i>
                     </a>
                 </li>
             </ul>
         </nav>
+        <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
     </header>
+
+    <!-- ===== MENU MOBILE ===== -->
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="index.html#intervenants">Intervenants</a></li>
+            <li><a href="reservation.html">Contact</a></li>
+            <li class="mobile-menu-social">
+                <a href="#" target="_blank" rel="noopener" title="LinkedIn Etherra"><i class="fab fa-linkedin"></i></a>
+                <a href="#" target="_blank" rel="noopener" title="Instagram Etherra"><i class="fab fa-instagram"></i></a>
+            </li>
+        </ul>
+    </div>
+    <div class="mobile-overlay" id="mobile-overlay"></div>
 
     <!-- ===== PROFIL HERO ===== -->
     <section class="profil-hero">
@@ -43,49 +61,19 @@
 
         <div class="profil-hero-inner">
 
-            <!-- Photo -->
             <div class="profil-photo-wrap">
-                <img
-                    src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80"
-                    alt="Baptiste Renard – Conférencier Innovation & IA"
-                    class="profil-photo"
-                >
+                <img id="profil-img" src="" alt="" class="profil-photo">
             </div>
 
-            <!-- Informations -->
             <div class="profil-info">
-                <h1 class="profil-name">Baptiste Renard</h1>
-                <p class="profil-subtitle">Conférencier &nbsp;·&nbsp; Innovation &amp; Intelligence Artificielle</p>
+                <h1 class="profil-name" id="profil-name"></h1>
 
-                <div class="profil-meta">
-                    <div class="profil-meta-item">
-                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
-                        <span>Lyon, Paris, Marseille &nbsp;·&nbsp; Disponible partout en France</span>
-                    </div>
-                    <div class="profil-meta-item">
-                        <i class="fas fa-calendar-check" aria-hidden="true"></i>
-                        <span>Disponible dès janvier 2026</span>
-                    </div>
-                    <div class="profil-meta-item">
-                        <i class="fas fa-microphone-alt" aria-hidden="true"></i>
-                        <span>Conférence &nbsp;·&nbsp; Table ronde &nbsp;·&nbsp; Atelier</span>
-                    </div>
-                    <div class="profil-meta-item">
-                        <i class="fas fa-language" aria-hidden="true"></i>
-                        <span>Français, Anglais</span>
-                    </div>
-                </div>
+                <div class="profil-meta" id="profil-meta"></div>
 
-                <div class="profil-tags" aria-label="Thématiques">
-                    <span class="tag">Innovation</span>
-                    <span class="tag">Intelligence Artificielle</span>
-                    <span class="tag">Transformation digitale</span>
-                    <span class="tag">Futur du travail</span>
-                    <span class="tag">Stratégie</span>
-                </div>
+                <div class="profil-tags" id="profil-domaines" aria-label="Domaines d'intervention"></div>
 
-                <a href="reservation.html" class="btn-reserver-hero">
-                    <i class="fas fa-calendar-plus" aria-hidden="true" style="margin-right:10px;"></i>Réserver Baptiste
+                <a id="btn-reserver-hero" href="reservation.html" class="btn-reserver-hero">
+                    <i class="fas fa-calendar-plus" aria-hidden="true" style="margin-right:10px;"></i>Réserver
                 </a>
             </div>
 
@@ -94,116 +82,15 @@
 
     <!-- ===== CONTENU PROFIL ===== -->
     <div class="profil-content">
-
-        <!-- COLONNE GAUCHE – Description -->
-        <main class="profil-desc">
-
-            <h2>À propos</h2>
-            <p>
-                Baptiste Renard est un conférencier et consultant reconnu, spécialisé dans les enjeux de
-                l'intelligence artificielle, de la transformation numérique et de l'innovation stratégique.
-                Fort de plus de 15 ans d'expérience au sein de grandes organisations technologiques et
-                de startups innovantes, il apporte une vision concrète et opérationnelle aux défis que
-                rencontrent les entreprises dans leur transition vers le monde de demain.
-            </p>
-            <p>
-                Ses interventions, reconnues pour leur clarté pédagogique et leur ancrage dans des cas
-                réels, s'adressent aussi bien aux directions générales qu'aux équipes opérationnelles.
-                Baptiste a été invité à intervenir lors de plus de 200 événements en France et en Europe,
-                pour des entreprises du CAC 40, des ETI innovantes et des institutions publiques.
-            </p>
-
-            <!-- Sujets d'intervention -->
-            <div class="subject-section">
-                <h2>Sujets d'intervention</h2>
-
-                <div class="subject-item">
-                    <div class="subject-title">
-                        <i class="fas fa-brain" aria-hidden="true"></i>
-                        L'IA au service de votre organisation
-                    </div>
-                    <p class="subject-text">
-                        Démystifier l'intelligence artificielle, comprendre ses enjeux réels et identifier
-                        les opportunités concrètes pour votre secteur — sans jargon technique inutile.
-                    </p>
-                </div>
-
-                <div class="subject-item">
-                    <div class="subject-title">
-                        <i class="fas fa-rocket" aria-hidden="true"></i>
-                        Le futur du travail
-                    </div>
-                    <p class="subject-text">
-                        Comment les technologies redéfinissent les métiers, les organisations et le management
-                        de demain. Vers une collaboration homme-machine plus efficace et plus humaine.
-                    </p>
-                </div>
-
-                <div class="subject-item">
-                    <div class="subject-title">
-                        <i class="fas fa-lightbulb" aria-hidden="true"></i>
-                        Culture de l'innovation
-                    </div>
-                    <p class="subject-text">
-                        Construire et ancrer une culture d'innovation durable au sein de votre organisation :
-                        méthodes, mindset et outils pour libérer la créativité de vos équipes.
-                    </p>
-                </div>
-
-                <div class="subject-item">
-                    <div class="subject-title">
-                        <i class="fas fa-chess-knight" aria-hidden="true"></i>
-                        Stratégie digitale &amp; disruption
-                    </div>
-                    <p class="subject-text">
-                        Anticiper les ruptures technologiques, repositionner sa stratégie et transformer
-                        la disruption en opportunité compétitive durable.
-                    </p>
-                </div>
-            </div>
-
-        </main>
-
-        <!-- COLONNE DROITE – Sidebar -->
-        <aside class="profil-sidebar">
-
-            <!-- Tarif -->
-            <div class="sidebar-card">
-                <h3>Tarif indicatif</h3>
-                <div class="tarif-amount">3 500 €</div>
-                <div class="tarif-unit">par demi-journée &nbsp;·&nbsp; HT</div>
-                <div class="tarif-unit" style="margin-top: 8px; font-style: italic;">
-                    Devis personnalisé sur demande
-                </div>
-            </div>
-
-            <!-- Disponibilités -->
-            <div class="sidebar-card">
-                <h3>Disponibilités 2026</h3>
-                <ul class="dispo-list">
-                    <li class="dispo-ok"><i class="fas fa-check-circle"></i> Janvier 2026</li>
-                    <li class="dispo-ok"><i class="fas fa-check-circle"></i> Février 2026</li>
-                    <li class="dispo-ok"><i class="fas fa-check-circle"></i> Mars 2026</li>
-                    <li class="dispo-off"><i class="fas fa-times-circle"></i> Avril 2026 (complet)</li>
-                    <li class="dispo-ok"><i class="fas fa-check-circle"></i> Mai 2026</li>
-                    <li class="dispo-ok"><i class="fas fa-check-circle"></i> Juin 2026</li>
-                </ul>
-            </div>
-
-            <!-- CTA Réserver -->
-            <a href="reservation.html" class="btn-reserver-side">
-                <i class="fas fa-calendar-plus"></i>Réserver
-            </a>
-
-        </aside>
-
+        <main class="profil-desc" id="profil-desc"></main>
+        <aside class="profil-sidebar" id="profil-sidebar"></aside>
     </div>
 
     <!-- ===== FOOTER ===== -->
     <footer>
         <div class="footer-inner">
             <div>
-                <div class="footer-brand"><img src="etherra-text.png" alt="Etherra" class="footer-logo-img"></div>
+                <div class="footer-brand"><span class="footer-logo-text">Etherra</span></div>
                 <div class="footer-tagline">Des idées qui inspirent, des événements qui engagent.</div>
             </div>
             <nav aria-label="Réseaux sociaux">
@@ -219,6 +106,186 @@
         </div>
         <p class="footer-copy">&copy; 2026 Etherra. Tous droits réservés.</p>
     </footer>
+
+    <script src="data.js"></script>
+    <script>
+        /* ================================================
+           RENDU DYNAMIQUE DU PROFIL
+           ================================================ */
+
+        function formatZones(zones) {
+            if (!zones || zones.length === 0) return null;
+            const continentales = [
+                "Île-de-France", "Hauts-de-France", "Grand-Est", "Normandie",
+                "Bretagne", "Centre-Val-de-Loire", "Pays de la Loire",
+                "Bourgogne-Franche-Comté", "Nouvelle-Aquitaine",
+                "Auvergne-Rhône-Alpes", "Occitanie", "Provence-Alpes-Côte d'Azur"
+            ];
+            const aContinentales = continentales.every(r => zones.includes(r));
+            const outreMer = zones.filter(z => !continentales.includes(z) && z !== "Corse");
+            const aCorse = zones.includes("Corse");
+
+            if (aContinentales && aCorse && outreMer.length > 0) {
+                return "France entière + " + outreMer.join(", ");
+            }
+            if (aContinentales && aCorse) return "France entière";
+            if (aContinentales) return "France métropolitaine (hors Corse) · " + (outreMer.length ? outreMer.join(", ") : "");
+            return zones.join(", ");
+        }
+
+        function renderDescription(text) {
+            if (!text) return '';
+            return text.split('\n\n').map(para => {
+                const lines = para.split('\n');
+                if (lines.length > 1) {
+                    return `<p><strong>${lines[0]}</strong><br>${lines.slice(1).join('<br>')}</p>`;
+                }
+                return `<p>${para}</p>`;
+            }).join('');
+        }
+
+        function renderProfil(p) {
+            document.title = `${p.nom} | Etherra`;
+
+            // Photo
+            const img = document.getElementById('profil-img');
+            img.src = p.photo;
+            img.alt = `Photo de ${p.nom}`;
+            img.onerror = function() {
+                this.src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=700&q=80';
+            };
+
+            // Nom
+            document.getElementById('profil-name').textContent = p.nom;
+
+            // Méta-informations
+            const metaEl = document.getElementById('profil-meta');
+            const items = [];
+
+            const zonesStr = formatZones(p.zones);
+            if (zonesStr) {
+                items.push({ icon: 'fas fa-map-marker-alt', text: zonesStr });
+            } else if (p.ville) {
+                items.push({ icon: 'fas fa-map-marker-alt', text: p.ville });
+            }
+
+            if (p.distanciel !== undefined) {
+                items.push({
+                    icon: 'fas fa-laptop',
+                    text: p.distanciel ? 'Distanciel possible' : 'Présentiel uniquement'
+                });
+            }
+
+            if (p.publicVise) {
+                items.push({ icon: 'fas fa-users', text: p.publicVise });
+            }
+
+            if (p.niveauInterventions) {
+                items.push({ icon: 'fas fa-graduation-cap', text: p.niveauInterventions });
+            }
+
+            if (p.formatsProposés) {
+                items.push({ icon: 'fas fa-microphone-alt', text: p.formatsProposés });
+            }
+
+            if (p.duree) {
+                items.push({ icon: 'fas fa-clock', text: p.duree });
+            }
+
+            metaEl.innerHTML = items.map(item => `
+                <div class="profil-meta-item">
+                    <i class="${item.icon}" aria-hidden="true"></i>
+                    <span>${item.text}</span>
+                </div>
+            `).join('');
+
+            // Domaines comme tags
+            const domainesEl = document.getElementById('profil-domaines');
+            const source = p.domaines || (p.tags ? p.tags.join(', ') : null);
+            if (source) {
+                const tags = source.split(',').map(d => d.trim());
+                domainesEl.innerHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
+            }
+
+            // Bouton réserver
+            const prenom = p.nom.split(' ')[0];
+            const reservationURL = `reservation.html?intervenant=${encodeURIComponent(p.nom)}`;
+            const btnHero = document.getElementById('btn-reserver-hero');
+            btnHero.href = reservationURL;
+            btnHero.innerHTML = `<i class="fas fa-calendar-plus" aria-hidden="true" style="margin-right:10px;"></i>Réserver ${prenom}`;
+
+            // Description
+            const descEl = document.getElementById('profil-desc');
+            if (p.description) {
+                descEl.innerHTML = `<h2>Description</h2>${renderDescription(p.description)}`;
+            } else {
+                descEl.innerHTML = `<p style="color: var(--texte-gris); font-style: italic;">Profil complet bientôt disponible.</p>`;
+            }
+
+            // Sidebar
+            const sidebarEl = document.getElementById('profil-sidebar');
+            let sidebarHTML = '';
+
+            if (p.tarif) {
+                sidebarHTML += `
+                    <div class="sidebar-card">
+                        <h3>Tarif indicatif</h3>
+                        <p style="color: var(--texte-blanc); font-size: 0.95rem; line-height: 1.65; margin: 0;">${p.tarif}</p>
+                    </div>
+                `;
+            }
+
+            sidebarHTML += `
+                <a href="${reservationURL}" class="btn-reserver-side">
+                    <i class="fas fa-calendar-plus"></i>Réserver
+                </a>
+            `;
+
+            sidebarEl.innerHTML = sidebarHTML;
+        }
+
+        // Lecture du paramètre ?id=
+        const params = new URLSearchParams(window.location.search);
+        const id = parseInt(params.get('id'), 10);
+        const intervenant = intervenants.find(p => p.id === id);
+
+        if (!intervenant) {
+            window.location.replace('index.html');
+        } else {
+            renderProfil(intervenant);
+        }
+
+        /* ================================================
+           MENU HAMBURGER MOBILE
+           ================================================ */
+        const hamburger  = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const overlay    = document.getElementById('mobile-overlay');
+
+        function openMenu() {
+            hamburger.classList.add('open');
+            mobileMenu.classList.add('open');
+            overlay.classList.add('visible');
+            hamburger.setAttribute('aria-expanded', 'true');
+            mobileMenu.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            hamburger.classList.remove('open');
+            mobileMenu.classList.remove('open');
+            overlay.classList.remove('visible');
+            hamburger.setAttribute('aria-expanded', 'false');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.contains('open') ? closeMenu() : openMenu();
+        });
+        overlay.addEventListener('click', closeMenu);
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    </script>
 
 </body>
 </html>

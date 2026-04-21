@@ -158,85 +158,8 @@
         <p class="footer-copy">&copy; 2026 Etherra. Tous droits réservés.</p>
     </footer>
 
+    <script src="data.js"></script>
     <script>
-        /* ================================================
-           DONNÉES DES INTERVENANTS
-           (À remplacer par des données réelles / API)
-           ================================================ */
-        const intervenants = [
-            {
-                id: 1,
-                nom: "Amara Diallo",
-                photo: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=70",
-                tags: ["Diversité & Inclusion", "Leadership"],
-                type: "conference",
-                ville: "Paris"
-            },
-            {
-                id: 2,
-                nom: "Baptiste Renard",
-                photo: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=70",
-                tags: ["Innovation", "Intelligence Artificielle"],
-                type: "table-ronde",
-                ville: "Lyon"
-            },
-            {
-                id: 3,
-                nom: "Caroline Meyer",
-                photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=70",
-                tags: ["RSE & Climat", "Développement durable"],
-                type: "atelier",
-                ville: "Bordeaux"
-            },
-            {
-                id: 4,
-                nom: "David Fontaine",
-                photo: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=70",
-                tags: ["Management", "Performance"],
-                type: "conference",
-                ville: "Paris"
-            },
-            {
-                id: 5,
-                nom: "Elena Vasquez",
-                photo: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=70",
-                tags: ["Marketing Digital", "Communication"],
-                type: "atelier",
-                ville: "Nantes"
-            },
-            {
-                id: 6,
-                nom: "François Leclerc",
-                photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=70",
-                tags: ["Entrepreneuriat", "Finance"],
-                type: "table-ronde",
-                ville: "Paris"
-            },
-            {
-                id: 7,
-                nom: "Julie Moreau",
-                photo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=70",
-                tags: ["Bien-être au travail", "Ressources humaines"],
-                type: "conference",
-                ville: "Marseille"
-            },
-            {
-                id: 8,
-                nom: "Karim Benali",
-                photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=70",
-                tags: ["Cybersécurité", "Tech"],
-                type: "atelier",
-                ville: "Paris"
-            },
-            {
-                id: 9,
-                nom: "Sophie Laurent",
-                photo: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=70",
-                tags: ["Stratégie", "Transformation"],
-                type: "evenement",
-                ville: "Toulouse"
-            }
-        ];
 
         /* ================================================
            RENDU DES CARTES
@@ -286,8 +209,11 @@
             const filtered = intervenants.filter(p => {
                 const matchTheme = !theme ||
                     p.nom.toLowerCase().includes(theme) ||
-                    p.tags.some(t => t.toLowerCase().includes(theme));
-                const matchVille = !ville || p.ville.toLowerCase().includes(ville);
+                    p.tags.some(t => t.toLowerCase().includes(theme)) ||
+                    (p.domaines && p.domaines.toLowerCase().includes(theme));
+                const matchVille = !ville ||
+                    p.ville.toLowerCase().includes(ville) ||
+                    (p.zones && p.zones.some(z => z.toLowerCase().includes(ville)));
                 const matchType  = !type  || p.type === type;
                 return matchTheme && matchVille && matchType;
             });
