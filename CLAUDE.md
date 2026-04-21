@@ -4,16 +4,22 @@
 Etherra est une plateforme web permettant de découvrir, rechercher et réserver des intervenants
 (conférenciers, animateurs d'ateliers, participants à des tables rondes, etc.) autour de différentes thématiques.
 
-## Lancer le projet
+## Déploiement
+- **Production** : https://etherra-lake.vercel.app
+- **Plateforme** : Vercel (projet `etherra`, scope `helios-projects-aec02ac6`)
+- **Commande de déploiement** : `vercel --prod` depuis `/Users/marc/DEV/Etherra`
+
+## Lancer le projet en local
 ```bash
-npm run dev   # Démarre sur un port dynamique (affiché dans le terminal)
+npm run dev   # Démarre sur le port 3000
 ```
 
 ## Structure des fichiers
 ```
 index.html        ← Page d'accueil (hero + recherche + grille intervenants)
-profil.html       ← Page profil d'un intervenant (template)
+profil.html       ← Page profil dynamique — chargée via ?id=X
 reservation.html  ← Formulaire de demande de réservation
+data.js           ← SOURCE UNIQUE des données intervenants (tableau intervenants[])
 style.css         ← Feuille de style partagée (toutes les pages)
 fond.png          ← Image de fond ardoise réelle (utilisée dans .hero et .intervenants-section)
 package.json      ← Scripts npm (serve statique)
@@ -69,12 +75,13 @@ La classe `.reveal` est ajoutée aux éléments au montage, `.visible` est ajout
 
 ## Menu hamburger mobile (< 600px)
 - Bouton `#hamburger` : 3 tirets → croix animée à l'ouverture
-- Drawer `#mobile-menu` : glisse depuis la droite, contient les 4 liens + icônes sociales en bas
+- Drawer `#mobile-menu` : glisse depuis la droite, contient les liens + icônes sociales en bas
 - Overlay `#mobile-overlay` : fond sombre cliquable pour fermer
 - Le scroll du body est bloqué pendant l'ouverture (`overflow: hidden`)
 - Fermeture : clic overlay, clic lien, reclic hamburger
-- **Tous les liens de nav ont `.hide-mobile`** (y compris "Accueil") — en mobile seul le hamburger est visible dans le header
-- L'overlay a `pointer-events: none` par défaut et `pointer-events: auto` uniquement avec `.visible` — sinon il bloque les clics sur le menu
+- **Tous les liens de nav ont `.hide-mobile`** — en mobile seul le hamburger est visible dans le header
+- L'overlay a `pointer-events: none` par défaut et `pointer-events: auto` uniquement avec `.visible`
+- Le hamburger est présent sur `index.html` et `profil.html`
 
 ## Responsive
 - Breakpoint tablette : `900px` (barre de recherche en colonne, steps en colonne)
@@ -83,36 +90,69 @@ La classe `.reveal` est ajoutée aux éléments au montage, `.visible` est ajout
 ## Cahier des charges (fonctionnel)
 
 ### Page d'accueil (`index.html`)
-- Barre de recherche multi-critères : thématique/nom, ville, format d'intervention
-- Filtrage JS côté client (fonction `rechercherIntervenants()`)
+- Charge les données depuis `data.js` (balise `<script src="data.js">` avant le script principal)
+- Barre de recherche multi-critères : thématique/nom, ville/région, format d'intervention
+- Filtrage JS côté client (`rechercherIntervenants()`) — cherche dans `nom`, `tags`, `domaines`, `ville` et `zones`
 - Liste des intervenants en grille, **triés alphabétiquement**
 - Section "Comment ça marche" (3 étapes)
 - Bannière CTA pour intervenants souhaitant rejoindre la plateforme
-- Footer avec liens LinkedIn et Instagram
 
 ### Page profil (`profil.html`)
-- Photo grand format
-- Nom, sous-titre, villes de déplacement, langues, formats
-- Tags thématiques
-- Description et sujets d'intervention détaillés
-- Sidebar sticky : tarif, disponibilités mois par mois, bouton Réserver
-- Lien vers `reservation.html`
+- **Entièrement dynamique** : lit `?id=X` dans l'URL, charge l'intervenant depuis `intervenants[]` (data.js), redirige vers `index.html` si ID inconnu
+- Affiche : photo, nom, zones d'interventions, distanciel oui/non, public visé, niveau, formats proposés, durée, domaines (tags), description, tarif indicatif
+- Sidebar : tarif + bouton Réserver (lien vers `reservation.html?intervenant=Nom`)
+- Photo avec fallback `onerror` vers une image générique si Google Drive inaccessible
+- Hamburger mobile présent
 
 ### Page réservation (`reservation.html`)
-Formulaire avec :
-- Nom / Organisation
-- Email
-- Intervenant souhaité (pré-rempli depuis URL `?intervenant=Nom`)
-- Type d'événement (select)
-- Date ou période souhaitée
-- Description de l'événement (obligatoire)
-- Informations complémentaires
+- Champs : Nom/Organisation, Email, Intervenant (pré-rempli depuis `?intervenant=Nom`), Type d'événement, Date, Description (obligatoire), Informations complémentaires
 - Validation côté client + message de confirmation animé
+- **Envoi email : non encore connecté** — à brancher sur Formspree (voir section À faire)
 
-## Données intervenants
-Définis en JS dans `index.html` (tableau `intervenants[]`).
-Chaque objet : `id`, `nom`, `photo`, `tags[]`, `type`, `ville`.
-→ À terme : remplacer par un appel API ou fichier JSON externe.
+## Données intervenants (`data.js`)
+Fichier source unique, inclus dans `index.html` et `profil.html`.
+
+### Structure d'un objet intervenant
+```javascript
+{
+    id: Number,                // identifiant unique
+    nom: String,               // "Prénom Nom" — utilisé pour l'affichage et le tri alphabétique
+    photo: String,             // URL (Google Drive : https://drive.google.com/uc?export=view&id=FILE_ID)
+    tags: String[],            // tags courts pour les cartes et la recherche
+    type: String,              // "conference" | "atelier" | "table-ronde" | "evenement"
+    ville: String,             // ville principale (utilisée dans la recherche)
+
+    // Champs profil complet (intervenants réels) :
+    zones: String[],           // régions d'intervention (ex: ["Île-de-France", "Bretagne", ...])
+    distanciel: Boolean,       // true = distanciel possible
+    domaines: String,          // liste séparée par virgules
+    publicVise: String,        // "Tout public", "Étudiants, Entreprises", etc.
+    niveauInterventions: String,
+    formatsProposés: String,   // "Conférences, Formations", etc.
+    duree: String,             // "1h ou 2h", "2h", etc.
+    description: String,       // texte libre, \n\n = saut de paragraphe, \n = retour à la ligne
+    tarif: String              // texte libre
+}
+```
+
+### Intervenants actuels
+| ID | Nom | Domaines | Ville |
+|----|-----|----------|-------|
+| 10 | Anthony Viaux | Climat, Transport, Aviation | Paris |
+| 11 | Dominique Bidou | Climat, Énergie, Développement durable | Paris |
+| 12 | Clément Le Dizès | Biodiversité, Agroécologie, Alimentation | Annecy |
+| 13 | Philippe Mistral | Climat, Biodiversité, Expéditions | Eyragues |
+
+Photos hébergées sur Google Drive (liens publics `uc?export=view`).
+
+### Règle données personnelles
+Ne jamais inclure dans `data.js` : email, téléphone, LinkedIn personnel. Seuls les champs listés ci-dessus sont autorisés.
+
+### Logique d'affichage des zones dans `profil.html`
+- Toutes les régions continentales + Corse + DOM-TOM → "France entière + [DOM-TOM]"
+- Toutes les régions continentales + Corse → "France entière"
+- Toutes les régions continentales (sans Corse) → "France métropolitaine (hors Corse)"
+- Sinon → liste des zones séparées par ", "
 
 ## Types d'événements supportés
 - `conference` – Conférence
@@ -121,10 +161,7 @@ Chaque objet : `id`, `nom`, `photo`, `tags[]`, `type`, `ville`.
 - `evenement` – Événement spécial
 
 ## À faire / évolutions prévues
-- Remplacer les photos placeholder Unsplash par les vraies photos des intervenants
-- Ajouter les vrais textes de présentation Etherra (hero, about, etc.)
+- **Connecter le formulaire de réservation à Formspree** : créer un formulaire sur formspree.io ciblant raphael.hrz22@gmail.com, récupérer l'ID (`xabcdefg`), remplacer la simulation `setTimeout` dans `reservation.html` par un `fetch('https://formspree.io/f/ID', { method: 'POST', ... })`
 - Renseigner les vrais liens LinkedIn et Instagram dans header et footer
-- Créer une page profil dynamique (depuis URL `?id=X`) ou une page par intervenant
-- Connecter le formulaire de réservation à un backend ou service email (Formspree, EmailJS, etc.)
-- Ajouter d'autres intervenants dans le tableau JS de `index.html`
-- Appliquer le menu hamburger sur `profil.html` et `reservation.html`
+- Ajouter les nouveaux intervenants dans `data.js` au fur et à mesure des inscriptions
+- Ajouter le menu hamburger sur `reservation.html`
