@@ -5,7 +5,8 @@ const intervenants = [
     {
         id: 10,
         nom: "Anthony Viaux",
-        photo: "https://drive.google.com/uc?export=view&id=1SrIIPpULRxjb5iuqOmmNMGBCJILpTSmf",
+        photo: "AnthonyViaux.webp",
+        photoPosition: "center 15%",
         tags: ["Climat", "Transport", "Aviation"],
         type: "conference",
         ville: "Paris",
@@ -27,7 +28,8 @@ const intervenants = [
     {
         id: 11,
         nom: "Dominique Bidou",
-        photo: "https://drive.google.com/uc?export=view&id=1IFc89ykdZ8LiDmSiDoaN86G5G6LOk145",
+        photo: "dominiquebidou.jpg",
+        photoPosition: "center 20%",
         tags: ["Climat", "Développement durable", "Énergie"],
         type: "conference",
         ville: "Paris",
@@ -49,7 +51,8 @@ const intervenants = [
     {
         id: 12,
         nom: "Clément Le Dizès",
-        photo: "https://drive.google.com/uc?export=view&id=1Sa3YYuSx14KFHm99TL7nDCZ2D10oJAI3",
+        photo: "clementledizes.png",
+        photoPosition: "center 25%",
         tags: ["Biodiversité", "Agroécologie", "Alimentation"],
         type: "conference",
         ville: "Annecy",
@@ -69,7 +72,8 @@ const intervenants = [
     {
         id: 13,
         nom: "Philippe Mistral",
-        photo: "https://drive.google.com/uc?export=view&id=1VklbLFpjKPllKZ6rlaqVCCPUqrPaoioa",
+        photo: "PhilippeMistral.jpg",
+        photoPosition: "center 20%",
         tags: ["Climat", "Biodiversité", "Expéditions"],
         type: "conference",
         ville: "Eyragues",

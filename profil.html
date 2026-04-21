@@ -151,6 +151,7 @@
             const img = document.getElementById('profil-img');
             img.src = p.photo;
             img.alt = `Photo de ${p.nom}`;
+            img.style.objectPosition = p.photoPosition || 'center center';
             img.onerror = function() {
                 this.src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=700&q=80';
             };
