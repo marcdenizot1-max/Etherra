@@ -153,6 +153,7 @@
             img.alt = `Photo de ${p.nom}`;
             img.style.objectPosition = p.photoPosition || 'center center';
             img.style.objectFit = p.photoFit || 'cover';
+            if (p.photoScale) { img.style.transform = p.photoScale; img.style.transformOrigin = 'center top'; }
             img.onerror = function() {
                 this.src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=700&q=80';
             };
