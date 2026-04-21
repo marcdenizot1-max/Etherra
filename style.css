@@ -438,7 +438,7 @@ nav a:hover { color: var(--vert-logo); }
 
 .card-img {
     width: 100%;
-    height: 270px;
+    height: 360px;
     object-fit: cover;
     background: #1d2229;
     filter: grayscale(30%) contrast(1.05);
