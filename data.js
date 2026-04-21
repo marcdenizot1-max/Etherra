@@ -30,7 +30,7 @@ const intervenants = [
         nom: "Dominique Bidou",
         photo: "dominiquebidou.jpg",
         photoPosition: "center 5%",
-        photoScale: "scale(0.93)",
+        photoScale: "scale(0.82)",
         tags: ["Climat", "Développement durable", "Énergie"],
         type: "conference",
         ville: "Paris",
